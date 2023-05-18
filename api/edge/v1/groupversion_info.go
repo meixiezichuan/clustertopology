@@ -31,8 +31,11 @@ var (
 	// SchemeGroupVersion used in informers
 	SchemeGroupVersion = schema.GroupVersion{Group: "edge.fdse.lab", Version: "v1"}
 
-	// GroupResource
+	// GroupResource used by listers
 	GroupResource = schema.GroupResource{Group: "edge.fdse.lab", Resource: "clustertopology"}
+
+	// GroupVersionResource used by informers
+	GroupVersionResource = schema.GroupVersionResource{Group: "edge.fdse.lab", Version: "v1", Resource: "clustertopology"}
 
 	// SchemeBuilder is used to add go types to the GroupVersionKind scheme
 	SchemeBuilder = &scheme.Builder{GroupVersion: GroupVersion}
