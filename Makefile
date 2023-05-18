@@ -77,6 +77,10 @@ docker-build: test ## Build docker image with the manager.
 docker-push: ## Push docker image with the manager.
 	docker push ${IMG}
 
+.PHONY: update-codegen
+update-codegen: ## generate clientset informer lister for crd
+	./hack/update-codegen.sh
+
 ##@ Deployment
 
 ifndef ignore-not-found

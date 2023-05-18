@@ -1,0 +1,20 @@
+# permissions for end users to view clustertopologies.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: clustertopology-viewer-role
+rules:
+- apiGroups:
+  - edge.fdse.lab
+  resources:
+  - clustertopologies
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - edge.fdse.lab
+  resources:
+  - clustertopologies/status
+  verbs:
+  - get

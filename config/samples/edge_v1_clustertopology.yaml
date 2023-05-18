@@ -1,0 +1,6 @@
+apiVersion: edge.fdse.lab/v1
+kind: ClusterTopology
+metadata:
+  name: clustertopology-sample
+spec:
+  # TODO(user): Add fields here
