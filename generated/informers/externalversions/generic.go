@@ -52,13 +52,13 @@ func (f *genericInformer) Lister() cache.GenericLister {
 // TODO extend this to unknown resources with a client pool
 func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource) (GenericInformer, error) {
 	switch resource {
-	// Group=example.my.domain, Version=v1
+	// Group=edge.fdse.lab, Version=v1
 	case v1.SchemeGroupVersion.WithResource("clustertopologies"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Example().V1().ClusterTopologies().Informer()}, nil
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Edge().V1().ClusterTopologies().Informer()}, nil
 	case v1.SchemeGroupVersion.WithResource("clustertopologylists"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Example().V1().ClusterTopologyLists().Informer()}, nil
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Edge().V1().ClusterTopologyLists().Informer()}, nil
 	case v1.SchemeGroupVersion.WithResource("clustertopologyspecs"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Example().V1().ClusterTopologySpecs().Informer()}, nil
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Edge().V1().ClusterTopologySpecs().Informer()}, nil
 
 	}
 

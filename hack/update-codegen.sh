@@ -31,13 +31,13 @@ SCRIPT_ROOT=$(dirname "${BASH_SOURCE[0]}")/..
 CODEGEN_PKG=${CODEGEN_PKG:-$(cd "${SCRIPT_ROOT}"; ls -d -1 ./vendor/k8s.io/code-generator 2>/dev/null || echo ../code-generator)}
 
 # kubebuilder生成的api目录结构code-generator无法直接使用
-rm -rf "${APIS_PKG}/${GROUP}" && mkdir -p "${APIS_PKG}/${GROUP}" && cp -r "${APIS_PKG}/${VERSION}" "${APIS_PKG}/${GROUP}"
+# rm -rf "${APIS_PKG}/${GROUP}" && mkdir -p "${APIS_PKG}/${GROUP}" && cp -r "${APIS_PKG}/${VERSION}" "${APIS_PKG}/${GROUP}"
 
 bash "${CODEGEN_PKG}"/generate-groups.sh "client,lister,informer" \
 ${MODULE}/${OUTPUT_PKG} ${MODULE}/${APIS_PKG} \
 ${GROUP_VERSION} \
 --go-header-file "${SCRIPT_ROOT}"/hack/boilerplate.go.txt
 
-#rm -rf "${APIS_PKG}/${GROUP}"
+
 
 

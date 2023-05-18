@@ -57,7 +57,7 @@ type clusterTopologies struct {
 }
 
 // newClusterTopologies returns a ClusterTopologies
-func newClusterTopologies(c *ExampleV1Client, namespace string) *clusterTopologies {
+func newClusterTopologies(c *EdgeV1Client, namespace string) *clusterTopologies {
 	return &clusterTopologies{
 		client: c.RESTClient(),
 		ns:     namespace,

@@ -20,8 +20,8 @@ package fake
 
 import (
 	clientset "github.com/meixiezichuan/clustertopology/generated/clientset/versioned"
-	examplev1 "github.com/meixiezichuan/clustertopology/generated/clientset/versioned/typed/edge/v1"
-	fakeexamplev1 "github.com/meixiezichuan/clustertopology/generated/clientset/versioned/typed/edge/v1/fake"
+	edgev1 "github.com/meixiezichuan/clustertopology/generated/clientset/versioned/typed/edge/v1"
+	fakeedgev1 "github.com/meixiezichuan/clustertopology/generated/clientset/versioned/typed/edge/v1/fake"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/discovery"
@@ -79,7 +79,7 @@ var (
 	_ testing.FakeClient  = &Clientset{}
 )
 
-// ExampleV1 retrieves the ExampleV1Client
-func (c *Clientset) ExampleV1() examplev1.ExampleV1Interface {
-	return &fakeexamplev1.FakeExampleV1{Fake: &c.Fake}
+// EdgeV1 retrieves the EdgeV1Client
+func (c *Clientset) EdgeV1() edgev1.EdgeV1Interface {
+	return &fakeedgev1.FakeEdgeV1{Fake: &c.Fake}
 }

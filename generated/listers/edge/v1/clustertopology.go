@@ -93,7 +93,7 @@ func (s clusterTopologyNamespaceLister) Get(name string) (*v1.ClusterTopology, e
 		return nil, err
 	}
 	if !exists {
-		return nil, errors.NewNotFound(v1.GroupResource, name)
+		return nil, errors.NewNotFound(v1.Resource("clustertopology"), name)
 	}
 	return obj.(*v1.ClusterTopology), nil
 }

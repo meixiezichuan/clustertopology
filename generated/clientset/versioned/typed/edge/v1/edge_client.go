@@ -24,32 +24,32 @@ import (
 	rest "k8s.io/client-go/rest"
 )
 
-type ExampleV1Interface interface {
+type EdgeV1Interface interface {
 	RESTClient() rest.Interface
 	ClusterTopologiesGetter
 	ClusterTopologyListsGetter
 	ClusterTopologySpecsGetter
 }
 
-// ExampleV1Client is used to interact with features provided by the example.my.domain group.
-type ExampleV1Client struct {
+// EdgeV1Client is used to interact with features provided by the edge.fdse.lab group.
+type EdgeV1Client struct {
 	restClient rest.Interface
 }
 
-func (c *ExampleV1Client) ClusterTopologies(namespace string) ClusterTopologyInterface {
+func (c *EdgeV1Client) ClusterTopologies(namespace string) ClusterTopologyInterface {
 	return newClusterTopologies(c, namespace)
 }
 
-func (c *ExampleV1Client) ClusterTopologyLists(namespace string) ClusterTopologyListInterface {
+func (c *EdgeV1Client) ClusterTopologyLists(namespace string) ClusterTopologyListInterface {
 	return newClusterTopologyLists(c, namespace)
 }
 
-func (c *ExampleV1Client) ClusterTopologySpecs(namespace string) ClusterTopologySpecInterface {
+func (c *EdgeV1Client) ClusterTopologySpecs(namespace string) ClusterTopologySpecInterface {
 	return newClusterTopologySpecs(c, namespace)
 }
 
-// NewForConfig creates a new ExampleV1Client for the given config.
-func NewForConfig(c *rest.Config) (*ExampleV1Client, error) {
+// NewForConfig creates a new EdgeV1Client for the given config.
+func NewForConfig(c *rest.Config) (*EdgeV1Client, error) {
 	config := *c
 	if err := setConfigDefaults(&config); err != nil {
 		return nil, err
@@ -58,12 +58,12 @@ func NewForConfig(c *rest.Config) (*ExampleV1Client, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &ExampleV1Client{client}, nil
+	return &EdgeV1Client{client}, nil
 }
 
-// NewForConfigOrDie creates a new ExampleV1Client for the given config and
+// NewForConfigOrDie creates a new EdgeV1Client for the given config and
 // panics if there is an error in the config.
-func NewForConfigOrDie(c *rest.Config) *ExampleV1Client {
+func NewForConfigOrDie(c *rest.Config) *EdgeV1Client {
 	client, err := NewForConfig(c)
 	if err != nil {
 		panic(err)
@@ -71,9 +71,9 @@ func NewForConfigOrDie(c *rest.Config) *ExampleV1Client {
 	return client
 }
 
-// New creates a new ExampleV1Client for the given RESTClient.
-func New(c rest.Interface) *ExampleV1Client {
-	return &ExampleV1Client{c}
+// New creates a new EdgeV1Client for the given RESTClient.
+func New(c rest.Interface) *EdgeV1Client {
+	return &EdgeV1Client{c}
 }
 
 func setConfigDefaults(config *rest.Config) error {
@@ -91,7 +91,7 @@ func setConfigDefaults(config *rest.Config) error {
 
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
-func (c *ExampleV1Client) RESTClient() rest.Interface {
+func (c *EdgeV1Client) RESTClient() rest.Interface {
 	if c == nil {
 		return nil
 	}

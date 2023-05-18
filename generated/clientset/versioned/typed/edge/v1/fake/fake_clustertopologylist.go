@@ -31,13 +31,13 @@ import (
 
 // FakeClusterTopologyLists implements ClusterTopologyListInterface
 type FakeClusterTopologyLists struct {
-	Fake *FakeExampleV1
+	Fake *FakeEdgeV1
 	ns   string
 }
 
-var clustertopologylistsResource = schema.GroupVersionResource{Group: "example.my.domain", Version: "v1", Resource: "clustertopologylists"}
+var clustertopologylistsResource = schema.GroupVersionResource{Group: "edge.fdse.lab", Version: "v1", Resource: "clustertopologylists"}
 
-var clustertopologylistsKind = schema.GroupVersionKind{Group: "example.my.domain", Version: "v1", Kind: "ClusterTopologyList"}
+var clustertopologylistsKind = schema.GroupVersionKind{Group: "edge.fdse.lab", Version: "v1", Kind: "ClusterTopologyList"}
 
 // Get takes name of the clusterTopologyList, and returns the corresponding clusterTopologyList object, and an error if there is any.
 func (c *FakeClusterTopologyLists) Get(ctx context.Context, name string, options v1.GetOptions) (result *edgev1.ClusterTopologyList, err error) {

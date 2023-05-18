@@ -56,7 +56,7 @@ type clusterTopologySpecs struct {
 }
 
 // newClusterTopologySpecs returns a ClusterTopologySpecs
-func newClusterTopologySpecs(c *ExampleV1Client, namespace string) *clusterTopologySpecs {
+func newClusterTopologySpecs(c *EdgeV1Client, namespace string) *clusterTopologySpecs {
 	return &clusterTopologySpecs{
 		client: c.RESTClient(),
 		ns:     namespace,

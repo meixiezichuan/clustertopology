@@ -172,9 +172,9 @@ type SharedInformerFactory interface {
 	ForResource(resource schema.GroupVersionResource) (GenericInformer, error)
 	WaitForCacheSync(stopCh <-chan struct{}) map[reflect.Type]bool
 
-	Example() edge.Interface
+	Edge() edge.Interface
 }
 
-func (f *sharedInformerFactory) Example() edge.Interface {
+func (f *sharedInformerFactory) Edge() edge.Interface {
 	return edge.New(f, f.namespace, f.tweakListOptions)
 }

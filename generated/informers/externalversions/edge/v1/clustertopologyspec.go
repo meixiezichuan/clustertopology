@@ -62,13 +62,13 @@ func NewFilteredClusterTopologySpecInformer(client versioned.Interface, namespac
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.ExampleV1().ClusterTopologySpecs(namespace).List(context.TODO(), options)
+				return client.EdgeV1().ClusterTopologySpecs(namespace).List(context.TODO(), options)
 			},
 			WatchFunc: func(options metav1.ListOptions) (watch.Interface, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.ExampleV1().ClusterTopologySpecs(namespace).Watch(context.TODO(), options)
+				return client.EdgeV1().ClusterTopologySpecs(namespace).Watch(context.TODO(), options)
 			},
 		},
 		&edgev1.ClusterTopologySpec{},
