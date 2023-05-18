@@ -31,7 +31,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/healthz"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	edgev1 "github.com/meixiezichuan/clustertopology/api/v1"
+	edgev1 "github.com/meixiezichuan/clustertopology/api/edge/v1"
 	"github.com/meixiezichuan/clustertopology/controllers"
 	//+kubebuilder:scaffold:imports
 )
