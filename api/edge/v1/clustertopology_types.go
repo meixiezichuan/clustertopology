@@ -24,7 +24,18 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// +genclient
+//+genclient
+//+kubebuilder:object:root=true
+//+kubebuilder:subresource:status
+
+// ClusterTopology is the Schema for the clustertopologies API
+type ClusterTopology struct {
+	metav1.TypeMeta   `json:",inline"`
+	metav1.ObjectMeta `json:"metadata,omitempty"`
+
+	Spec   ClusterTopologySpec   `json:"spec,omitempty"`
+	Status ClusterTopologyStatus `json:"status,omitempty"`
+}
 
 // ClusterTopologySpec defines the desired state of ClusterTopology
 type ClusterTopologySpec struct {
@@ -50,20 +61,6 @@ type ClusterTopologyStatus struct {
 	CalculationTime metav1.Time `json:"weightCalculationTime,omitempty" protobuf:"bytes,2,opt,name=weightCalculationTime"`
 }
 
-// +genclient
-//+kubebuilder:object:root=true
-//+kubebuilder:subresource:status
-
-// ClusterTopology is the Schema for the clustertopologies API
-type ClusterTopology struct {
-	metav1.TypeMeta   `json:",inline"`
-	metav1.ObjectMeta `json:"metadata,omitempty"`
-
-	Spec   ClusterTopologySpec   `json:"spec,omitempty"`
-	Status ClusterTopologyStatus `json:"status,omitempty"`
-}
-
-// +genclient
 //+kubebuilder:object:root=true
 
 // ClusterTopologyList contains a list of ClusterTopology
@@ -83,7 +80,7 @@ type TopologyList []TopologyInfo
 // TopologyInfo contains information about network costs for a particular Topology Key.
 // +protobuf=true
 type TopologyInfo struct {
-	// Topology key (e.g., "topology.kubernetes.io/region", "topology.kubernetes.io/zone").
+	// Topology key (e.g., "topology.kubernetes.io/network").
 	// +required
 	TopologyKey TopologyKey `json:"topologyKey" protobuf:"bytes,1,opt,name=topologyKey"` // add as enum instead of string
 

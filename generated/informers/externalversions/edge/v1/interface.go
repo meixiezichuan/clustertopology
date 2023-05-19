@@ -26,10 +26,6 @@ import (
 type Interface interface {
 	// ClusterTopologies returns a ClusterTopologyInformer.
 	ClusterTopologies() ClusterTopologyInformer
-	// ClusterTopologyLists returns a ClusterTopologyListInformer.
-	ClusterTopologyLists() ClusterTopologyListInformer
-	// ClusterTopologySpecs returns a ClusterTopologySpecInformer.
-	ClusterTopologySpecs() ClusterTopologySpecInformer
 }
 
 type version struct {
@@ -46,14 +42,4 @@ func New(f internalinterfaces.SharedInformerFactory, namespace string, tweakList
 // ClusterTopologies returns a ClusterTopologyInformer.
 func (v *version) ClusterTopologies() ClusterTopologyInformer {
 	return &clusterTopologyInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
-}
-
-// ClusterTopologyLists returns a ClusterTopologyListInformer.
-func (v *version) ClusterTopologyLists() ClusterTopologyListInformer {
-	return &clusterTopologyListInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
-}
-
-// ClusterTopologySpecs returns a ClusterTopologySpecInformer.
-func (v *version) ClusterTopologySpecs() ClusterTopologySpecInformer {
-	return &clusterTopologySpecInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
 }

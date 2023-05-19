@@ -32,14 +32,6 @@ func (c *FakeEdgeV1) ClusterTopologies(namespace string) v1.ClusterTopologyInter
 	return &FakeClusterTopologies{c, namespace}
 }
 
-func (c *FakeEdgeV1) ClusterTopologyLists(namespace string) v1.ClusterTopologyListInterface {
-	return &FakeClusterTopologyLists{c, namespace}
-}
-
-func (c *FakeEdgeV1) ClusterTopologySpecs(namespace string) v1.ClusterTopologySpecInterface {
-	return &FakeClusterTopologySpecs{c, namespace}
-}
-
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
 func (c *FakeEdgeV1) RESTClient() rest.Interface {

@@ -19,7 +19,3 @@ limitations under the License.
 package v1
 
 type ClusterTopologyExpansion interface{}
-
-type ClusterTopologyListExpansion interface{}
-
-type ClusterTopologySpecExpansion interface{}

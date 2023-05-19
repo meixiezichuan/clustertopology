@@ -27,8 +27,6 @@ import (
 type EdgeV1Interface interface {
 	RESTClient() rest.Interface
 	ClusterTopologiesGetter
-	ClusterTopologyListsGetter
-	ClusterTopologySpecsGetter
 }
 
 // EdgeV1Client is used to interact with features provided by the edge.fdse.lab group.
@@ -38,14 +36,6 @@ type EdgeV1Client struct {
 
 func (c *EdgeV1Client) ClusterTopologies(namespace string) ClusterTopologyInterface {
 	return newClusterTopologies(c, namespace)
-}
-
-func (c *EdgeV1Client) ClusterTopologyLists(namespace string) ClusterTopologyListInterface {
-	return newClusterTopologyLists(c, namespace)
-}
-
-func (c *EdgeV1Client) ClusterTopologySpecs(namespace string) ClusterTopologySpecInterface {
-	return newClusterTopologySpecs(c, namespace)
 }
 
 // NewForConfig creates a new EdgeV1Client for the given config.
