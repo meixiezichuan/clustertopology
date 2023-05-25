@@ -18,6 +18,7 @@ package controllers
 
 import (
 	"context"
+	v1 "k8s.io/api/core/v1"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -36,6 +37,8 @@ type ClusterTopologyReconciler struct {
 //+kubebuilder:rbac:groups=edge.fdse.lab,resources=clustertopologies,verbs=get;list;watch;create;update;patch;delete
 //+kubebuilder:rbac:groups=edge.fdse.lab,resources=clustertopologies/status,verbs=get;update;patch
 //+kubebuilder:rbac:groups=edge.fdse.lab,resources=clustertopologies/finalizers,verbs=update
+//+kubebuilder:rbac:groups="",resources=nodes,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups="",resources=nodes/status,verbs=get
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
@@ -58,5 +61,6 @@ func (r *ClusterTopologyReconciler) Reconcile(ctx context.Context, req ctrl.Requ
 func (r *ClusterTopologyReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&edgev1.ClusterTopology{}).
+		Owns(&v1.Node{}).
 		Complete(r)
 }

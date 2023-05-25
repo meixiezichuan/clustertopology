@@ -24,6 +24,8 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
+const NetTopolgKey = "topology.kubernetes.io/network"
+
 //+genclient
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
@@ -133,6 +135,33 @@ type CostInfo struct {
 	// +kubebuilder:validation:Default=0
 	// +required
 	NetworkCost int64 `json:"networkCost" protobuf:"bytes,4,opt,name=networkCost"`
+}
+
+func (c *ClusterTopology) GetNetOriginInfoByNode(node string) *OriginInfo {
+	var originInfo OriginInfo
+	for _, t := range c.Spec.Topologys {
+		if t.TopologyKey == NetTopolgKey {
+			for _, o := range t.OriginList {
+				if o.Origin == node {
+					originInfo = *o.DeepCopy()
+					return &originInfo
+				}
+			}
+		}
+	}
+	return nil
+}
+
+func (c *ClusterTopology) SetNetOriginInfo(originInfo *OriginInfo) {
+	for _, t := range c.Spec.Topologys {
+		if t.TopologyKey == NetTopolgKey {
+			for i, o := range t.OriginList {
+				if o.Origin == originInfo.Origin {
+					t.OriginList[i] = *originInfo
+				}
+			}
+		}
+	}
 }
 
 func init() {

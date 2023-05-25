@@ -1,0 +1,41 @@
+apiVersion: edge.fdse.lab/v1
+kind: ClusterTopology
+metadata:
+  name: clustertopology-sample
+spec:
+  cluster: edge1
+  topologys:
+    - topologyKey: "topology.kubernetes.io/network"
+      originList:
+        - origin: "k8s-node1"
+          costList:
+            - destination: "k8s-node2"
+              networkCost: 1
+            - destination: "k8s-node3"
+              networkCost: 3
+            - destination: "k8s-master"
+              networkCost: 4
+        - origin: "k8s-node2"
+          costList:
+            - destination: "k8s-node1"
+              networkCost: 1
+            - destination: "k8s-node3"
+              networkCost: 2
+            - destination: "k8s-master"
+              networkCost: 3
+        - origin: "k8s-node3"
+          costList:
+            - destination: "k8s-node1"
+              networkCost: 3
+            - destination: "k8s-node2"
+              networkCost: 2
+            - destination: "k8s-master"
+              networkCost: 3
+        - origin: "k8s-master"
+          costList:
+            - destination: "k8s-node1"
+              networkCost: 4
+            - destination: "k8s-node2"
+              networkCost: 3
+            - destination: "k8s-node3"
+              networkCost: 3
