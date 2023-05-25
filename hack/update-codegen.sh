@@ -27,7 +27,13 @@ GROUP=edge
 VERSION=v1
 GROUP_VERSION=$GROUP:$VERSION
 
+SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
 SCRIPT_ROOT=$(dirname "${BASH_SOURCE[0]}")/..
+# add code-generator
+sed 's@//@@g' "${SCRIPT_DIR}"/tools.go > "${SCRIPT_DIR}"/tools1.go
+go mod tidy
+go mod vendor
+
 CODEGEN_PKG=${CODEGEN_PKG:-$(cd "${SCRIPT_ROOT}"; ls -d -1 ./vendor/k8s.io/code-generator 2>/dev/null || echo ../code-generator)}
 
 # kubebuilder生成的api目录结构code-generator无法直接使用
@@ -38,6 +44,6 @@ ${MODULE}/${OUTPUT_PKG} ${MODULE}/${APIS_PKG} \
 ${GROUP_VERSION} \
 --go-header-file "${SCRIPT_ROOT}"/hack/boilerplate.go.txt
 
-
+rm "${SCRIPT_DIR}"/tools1.go
 
 
