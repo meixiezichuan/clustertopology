@@ -3,6 +3,7 @@ module github.com/meixiezichuan/clustertopology
 go 1.16
 
 require (
+	github.com/go-logr/logr v0.4.0
 	github.com/gobwas/ws v1.1.0
 	github.com/google/uuid v1.1.2
 	github.com/onsi/ginkgo v1.16.4
@@ -12,6 +13,5 @@ require (
 	k8s.io/api v0.22.1
 	k8s.io/apimachinery v0.22.1
 	k8s.io/client-go v0.22.1
-	k8s.io/code-generator v0.22.1
 	sigs.k8s.io/controller-runtime v0.10.0
 )
