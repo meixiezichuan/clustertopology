@@ -18,8 +18,9 @@ package controllers
 
 import (
 	"context"
+	"github.com/go-logr/logr"
 	v1 "k8s.io/api/core/v1"
-
+	"k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -32,6 +33,16 @@ import (
 type ClusterTopologyReconciler struct {
 	client.Client
 	Scheme *runtime.Scheme
+	Log    logr.Logger
+}
+
+func contains(s []string, e string) bool {
+	for _, a := range s {
+		if a == e {
+			return true
+		}
+	}
+	return false
 }
 
 //+kubebuilder:rbac:groups=edge.fdse.lab,resources=clustertopologies,verbs=get;list;watch;create;update;patch;delete
@@ -52,7 +63,52 @@ type ClusterTopologyReconciler struct {
 func (r *ClusterTopologyReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
 
-	// TODO(user): your logic here
+	// get clustertopology
+	var c edgev1.ClusterTopology
+	err := r.Get(ctx, req.NamespacedName, &c)
+	if err != nil {
+		if errors.IsNotFound(err) {
+			r.Log.Info("CR ClusterTopology not exist")
+			return ctrl.Result{}, nil
+		}
+		r.Log.Error(err, "error on getting cr clustertopology")
+		return ctrl.Result{}, err
+	}
+
+	// check node list
+	nodes := v1.NodeList{}
+	listErr := r.List(ctx, &nodes, nil)
+	if listErr != nil {
+		return ctrl.Result{}, listErr
+	}
+	var availableNodes []string
+	for _, node := range nodes.Items {
+		for _, condition := range node.Status.Conditions {
+			if condition.Type == "Ready" && condition.Reason == "True" {
+				availableNodes = append(availableNodes, node.Name)
+			}
+		}
+	}
+
+	originList := c.GetNetOriginList()
+	var newOriginList edgev1.OriginList
+	for _, o := range originList {
+		if contains(availableNodes, o.Origin) {
+			newOrigin := edgev1.OriginInfo{Origin: o.Origin, CostList: edgev1.CostList{}}
+			for _, cost := range o.CostList {
+				if contains(availableNodes, cost.Destination) {
+					newOrigin.CostList = append(newOrigin.CostList, cost)
+				}
+			}
+			newOriginList = append(newOriginList, newOrigin)
+		}
+	}
+	c.SetNetOriginList(newOriginList)
+	err = r.Update(ctx, &c, nil)
+	if err != nil {
+		r.Log.Error(err, "error on update cr clustertopology")
+		return ctrl.Result{}, err
+	}
 
 	return ctrl.Result{}, nil
 }

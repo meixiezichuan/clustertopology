@@ -137,6 +137,23 @@ type CostInfo struct {
 	NetworkCost int64 `json:"networkCost" protobuf:"bytes,4,opt,name=networkCost"`
 }
 
+func (c *ClusterTopology) GetNetOriginList() OriginList {
+	for _, t := range c.Spec.Topologys {
+		if t.TopologyKey == NetTopolgKey {
+			return t.OriginList
+		}
+	}
+	return nil
+}
+
+func (c *ClusterTopology) SetNetOriginList(originList OriginList) {
+	for _, t := range c.Spec.Topologys {
+		if t.TopologyKey == NetTopolgKey {
+			t.OriginList = originList
+		}
+	}
+}
+
 func (c *ClusterTopology) GetNetOriginInfoByNode(node string) *OriginInfo {
 	var originInfo OriginInfo
 	for _, t := range c.Spec.Topologys {
