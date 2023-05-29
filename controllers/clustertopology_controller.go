@@ -77,7 +77,7 @@ func (r *ClusterTopologyReconciler) Reconcile(ctx context.Context, req ctrl.Requ
 
 	// check node list
 	nodes := v1.NodeList{}
-	listErr := r.List(ctx, &nodes, nil)
+	listErr := r.List(ctx, &nodes)
 	if listErr != nil {
 		return ctrl.Result{}, listErr
 	}
@@ -104,7 +104,7 @@ func (r *ClusterTopologyReconciler) Reconcile(ctx context.Context, req ctrl.Requ
 		}
 	}
 	c.SetNetOriginList(newOriginList)
-	err = r.Update(ctx, &c, nil)
+	err = r.Update(ctx, &c)
 	if err != nil {
 		r.Log.Error(err, "error on update cr clustertopology")
 		return ctrl.Result{}, err
